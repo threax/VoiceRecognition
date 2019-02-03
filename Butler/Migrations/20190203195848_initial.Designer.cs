@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Butler.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190203194707_initial")]
+    [Migration("20190203195848_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,34 +18,16 @@ namespace Butler.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.0-rtm-35687");
 
-            modelBuilder.Entity("Butler.Database.AppCommandLinkEntity", b =>
-                {
-                    b.Property<Guid>("AppCommandLinkId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<Guid>("AppCommandId");
-
-                    b.Property<Guid>("AppCommandSetId");
-
-                    b.Property<DateTime>("Created");
-
-                    b.Property<string>("Json");
-
-                    b.Property<DateTime>("Modified");
-
-                    b.HasKey("AppCommandLinkId");
-
-                    b.HasIndex("AppCommandSetId");
-
-                    b.ToTable("AppCommandLinks");
-                });
-
             modelBuilder.Entity("Butler.Database.AppCommandSetEntity", b =>
                 {
                     b.Property<Guid>("AppCommandSetId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<Guid>("AppCommandId");
+
                     b.Property<DateTime>("Created");
+
+                    b.Property<string>("Json");
 
                     b.Property<string>("Key")
                         .HasMaxLength(10);
@@ -106,14 +88,6 @@ namespace Butler.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("spc.auth.UsersToRoles");
-                });
-
-            modelBuilder.Entity("Butler.Database.AppCommandLinkEntity", b =>
-                {
-                    b.HasOne("Butler.Database.AppCommandSetEntity", "AppCommandSet")
-                        .WithMany("AppCommandLinks")
-                        .HasForeignKey("AppCommandSetId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Threax.AspNetCore.UserBuilder.Entities.UserToRole", b =>

@@ -29,5 +29,8 @@ namespace Butler.InputModels
 
         public KeyModifier Modifier { get; set; }
 
+        [ValueProvider(typeof(Butler.Service.AppCommand.Client.AppCommandValueProvider))]
+        public Guid AppCommandId { get; set; }
+
     }
 }

@@ -21,6 +21,14 @@ namespace Butler.Models
 
         KeyModifier Modifier { get; set; }
 
+        Guid AppCommandId { get; set; }
+
+    }
+
+    public partial interface IAppCommandSet_Json
+    {
+        String Json { get; set; }
+
     }
 
     public partial interface IAppCommandSetId

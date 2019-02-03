@@ -31,6 +31,9 @@ namespace Butler.ViewModels
 
         public KeyModifier Modifier { get; set; }
 
+        [ValueProvider(typeof(Butler.Service.AppCommand.Client.AppCommandValueProvider))]
+        public Guid AppCommandId { get; set; }
+
         [UiOrder(0, 2147483646)]
         public DateTime Created { get; set; }
 

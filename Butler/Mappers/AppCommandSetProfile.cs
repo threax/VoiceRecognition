@@ -37,6 +37,7 @@ namespace Butler.Mappers
         void MapInputToEntity(IMappingExpression<AppCommandSetInput, AppCommandSetEntity> mapExpr)
         {
             mapExpr.ForMember(d => d.AppCommandSetId, opt => opt.Ignore())
+                .ForMember(d => d.Json, opt => opt.Ignore())
                 .ForMember(d => d.Created, opt => opt.MapFrom<ICreatedResolver>())
                 .ForMember(d => d.Modified, opt => opt.MapFrom<IModifiedResolver>());
         }

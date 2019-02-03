@@ -11,7 +11,7 @@ using Butler.Models;
 
 namespace Butler.Database 
 {
-    public partial class AppCommandSetEntity : IAppCommandSet, IAppCommandSetId, ICreatedModified
+    public partial class AppCommandSetEntity : IAppCommandSet, IAppCommandSetId, IAppCommandSet_Json, ICreatedModified
     {
         [Key]
         public Guid AppCommandSetId { get; set; }
@@ -30,6 +30,10 @@ namespace Butler.Database
         public String Key { get; set; }
 
         public KeyModifier Modifier { get; set; }
+
+        public Guid AppCommandId { get; set; }
+
+        public String Json { get; set; }
 
         public DateTime Created { get; set; }
 

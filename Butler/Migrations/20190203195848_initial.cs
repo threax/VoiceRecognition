@@ -17,6 +17,8 @@ namespace Butler.Migrations
                     Response = table.Column<string>(maxLength: 2000, nullable: true),
                     Key = table.Column<string>(maxLength: 10, nullable: true),
                     Modifier = table.Column<int>(nullable: false),
+                    AppCommandId = table.Column<Guid>(nullable: false),
+                    Json = table.Column<string>(nullable: true),
                     Created = table.Column<DateTime>(nullable: false),
                     Modified = table.Column<DateTime>(nullable: false)
                 },
@@ -50,28 +52,6 @@ namespace Butler.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AppCommandLinks",
-                columns: table => new
-                {
-                    AppCommandLinkId = table.Column<Guid>(nullable: false),
-                    Json = table.Column<string>(nullable: true),
-                    AppCommandId = table.Column<Guid>(nullable: false),
-                    AppCommandSetId = table.Column<Guid>(nullable: false),
-                    Created = table.Column<DateTime>(nullable: false),
-                    Modified = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AppCommandLinks", x => x.AppCommandLinkId);
-                    table.ForeignKey(
-                        name: "FK_AppCommandLinks_AppCommandSets_AppCommandSetId",
-                        column: x => x.AppCommandSetId,
-                        principalTable: "AppCommandSets",
-                        principalColumn: "AppCommandSetId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "spc.auth.UsersToRoles",
                 columns: table => new
                 {
@@ -96,11 +76,6 @@ namespace Butler.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AppCommandLinks_AppCommandSetId",
-                table: "AppCommandLinks",
-                column: "AppCommandSetId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_spc.auth.UsersToRoles_RoleId",
                 table: "spc.auth.UsersToRoles",
                 column: "RoleId");
@@ -109,13 +84,10 @@ namespace Butler.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AppCommandLinks");
+                name: "AppCommandSets");
 
             migrationBuilder.DropTable(
                 name: "spc.auth.UsersToRoles");
-
-            migrationBuilder.DropTable(
-                name: "AppCommandSets");
 
             migrationBuilder.DropTable(
                 name: "spc.auth.Roles");
