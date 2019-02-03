@@ -10,8 +10,6 @@ namespace Butler.ModelSchemas
         [NoViewModel]
         public String Json { get; set; }
 
-        public AppCommandSet CommandSet { get; set; }
-
         [DefineValueProvider(typeof(AppCommandValueProvider))]
         public Guid AppCommandId { get; set; }
     }

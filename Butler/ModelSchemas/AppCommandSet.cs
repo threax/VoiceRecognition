@@ -1,7 +1,9 @@
 ﻿using Butler.Models;
+using Butler.Service.AppCommand.Client;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Threax.AspNetCore.Models;
 
 namespace Butler.ModelSchemas
 {
@@ -22,6 +24,11 @@ namespace Butler.ModelSchemas
 
         public KeyModifier Modifier { get; set; }
 
-        public List<AppCommandLink> Links { get; set; }
+        [DefineValueProvider(typeof(AppCommandValueProvider))]
+        public Guid AppCommandId { get; set; }
+
+        [NoInputModel]
+        [NoViewModel]
+        public String Json { get; set; }
     }
 }

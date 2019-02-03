@@ -31,8 +31,6 @@ namespace Butler.Database
 
         public KeyModifier Modifier { get; set; }
 
-        public List<AppCommandLinkEntity> AppCommandLinks { get; set; }
-
         public DateTime Created { get; set; }
 
         public DateTime Modified { get; set; }

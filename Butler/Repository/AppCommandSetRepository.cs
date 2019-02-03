@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Threax.AspNetCore.Halcyon.Ext;
+using Butler.Service.AppCommand.Client;
 
 namespace Butler.Repository
 {
@@ -18,11 +19,13 @@ namespace Butler.Repository
     {
         private AppDbContext dbContext;
         private AppMapper mapper;
+        private IAppCommandClient commandClient;
 
-        public AppCommandSetRepository(AppDbContext dbContext, AppMapper mapper)
+        public AppCommandSetRepository(AppDbContext dbContext, AppMapper mapper, IAppCommandClient commandClient)
         {
             this.dbContext = dbContext;
             this.mapper = mapper;
+            this.commandClient = commandClient;
         }
 
         public async Task<AppCommandSetCollection> List(AppCommandSetQuery query)
@@ -93,7 +96,7 @@ namespace Butler.Repository
         {
             get
             {
-                return dbContext.AppCommandSets.Include(i => i.AppCommandLinks);
+                return dbContext.AppCommandSets;
             }
         }
 
