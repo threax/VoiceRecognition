@@ -28,6 +28,12 @@ namespace Microsoft.Extensions.DependencyInjection
                 return new AppCommandEntry(client.ServiceUrl, clientCredsFactory);
             });
 
+            services.TryAddScoped<IAppCommandHalClientFactory>(s =>
+            {
+                var clientCredsFactory = new ClientCredentialsAccessTokenFactory<AppCommandEntry>(client.ClientCredentials, new BearerHttpClientFactory<AppCommandEntry>(s.GetRequiredService<IHttpClientFactory>()));
+                return new AppCommandHalClientFactory(clientCredsFactory);
+            });
+
             services.TryAddScoped<IAppCommandClient, AppCommandClient>();
             services.TryAddScoped<AppCommandValueProvider>();
 

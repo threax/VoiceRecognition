@@ -15,6 +15,7 @@ namespace Butler.ViewModels
 {
     [HalModel]
     [HalSelfActionLink(typeof(AppCommandSetsController), nameof(AppCommandSetsController.Get))]
+    [HalActionLink(typeof(AppCommandSetsController), nameof(AppCommandSetsController.Execute))]
     [HalActionLink(typeof(AppCommandSetsController), nameof(AppCommandSetsController.Update))]
     [HalActionLink(typeof(AppCommandSetsController), nameof(AppCommandSetsController.Delete))]
     public partial class AppCommandSet : IAppCommandSet, IAppCommandSetId, ICreatedModified

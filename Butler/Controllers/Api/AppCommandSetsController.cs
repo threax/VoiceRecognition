@@ -9,6 +9,7 @@ using Butler.ViewModels;
 using Butler.InputModels;
 using Butler.Models;
 using Microsoft.AspNetCore.Authorization;
+using Butler.Service.AppCommand.Client;
 
 namespace Butler.Controllers.Api
 {
@@ -36,6 +37,13 @@ namespace Butler.Controllers.Api
         public async Task<AppCommandSet> Get(Guid appCommandSetId)
         {
             return await repo.Get(appCommandSetId);
+        }
+
+        [HttpPost("[action]/{AppCommandSetId}")]
+        [HalRel(nameof(Execute))]
+        public async Task Execute(Guid appCommandSetId, [FromServices] IAppCommandHalClientFactory halClientFactory)
+        {
+            await repo.Execute(appCommandSetId, halClientFactory);
         }
 
         [HttpPost]

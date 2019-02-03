@@ -147,6 +147,33 @@ export class AppCommandSetResult {
         return this.client.HasLinkDoc("self");
     }
 
+    public execute(): Promise<AppCommandSetResult> {
+        return this.client.LoadLink("Execute")
+               .then(r => {
+                    return new AppCommandSetResult(r);
+                });
+
+    }
+
+    public canExecute(): boolean {
+        return this.client.HasLink("Execute");
+    }
+
+    public linkForExecute(): hal.HalLink {
+        return this.client.GetLink("Execute");
+    }
+
+    public getExecuteDocs(query?: HalEndpointDocQuery): Promise<hal.HalEndpointDoc> {
+        return this.client.LoadLinkDoc("Execute", query)
+            .then(r => {
+                return r.GetData<hal.HalEndpointDoc>();
+            });
+    }
+
+    public hasExecuteDocs(): boolean {
+        return this.client.HasLinkDoc("Execute");
+    }
+
     public update(data: AppCommandSetInput): Promise<AppCommandSetResult> {
         return this.client.LoadLinkWithData("Update", data)
                .then(r => {
@@ -1122,14 +1149,10 @@ export interface AppCommandSet {
     voicePrompt?: string;
     response?: string;
     key?: string;
-    myProperty?: KeyModifier;
-    appCommandLinkIds?: string[];
+    modifier?: KeyModifier;
+    appCommandId?: string;
     created?: string;
     modified?: string;
-}
-
-export interface AppCommandLinkInput {
-    appCommandId?: string;
 }
 
 export interface AppCommandSetInput {
@@ -1137,8 +1160,8 @@ export interface AppCommandSetInput {
     voicePrompt?: string;
     response?: string;
     key?: string;
-    myProperty?: KeyModifier;
-    appCommandLinks?: AppCommandLinkInput[];
+    modifier?: KeyModifier;
+    appCommandId?: string;
 }
 
 export interface AppCommandSetCollection {

@@ -12,9 +12,11 @@ namespace Butler.Mappers
 {
     public partial class AppMapper
     {
-        public AppCommandSetEntity MapAppCommandSet(AppCommandSetInput src, AppCommandSetEntity dest)
+        public AppCommandSetEntity MapAppCommandSet(AppCommandSetInput src, AppCommandSetEntity dest, String json)
         {
-            return mapper.Map(src, dest);
+            mapper.Map(src, dest);
+            dest.Json = json;
+            return dest;
         }
 
         public AppCommandSet MapAppCommandSet(AppCommandSetEntity src, AppCommandSet dest)

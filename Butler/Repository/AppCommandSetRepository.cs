@@ -12,6 +12,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Threax.AspNetCore.Halcyon.Ext;
 using Butler.Service.AppCommand.Client;
+using Newtonsoft.Json;
+using Threax.AspNetCore.Halcyon.Client;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Butler.Repository
 {
@@ -45,9 +48,16 @@ namespace Butler.Repository
             return mapper.MapAppCommandSet(entity, new AppCommandSet());
         }
 
+        public async Task Execute(Guid appCommandSetId, IAppCommandHalClientFactory halClientFactory)
+        {
+            var entity = await this.Entity(appCommandSetId);
+            var link = JsonConvert.DeserializeObject<HalLink>(entity.Json);
+            var client = await halClientFactory.Load(link);
+        }
+
         public async Task<AppCommandSet> Add(AppCommandSetInput appCommandSet)
         {
-            var entity = mapper.MapAppCommandSet(appCommandSet, new AppCommandSetEntity());
+            var entity = mapper.MapAppCommandSet(appCommandSet, new AppCommandSetEntity(), JsonConvert.SerializeObject(await GetLink(appCommandSet)));
             this.dbContext.Add(entity);
             await SaveChanges();
             return mapper.MapAppCommandSet(entity, new AppCommandSet());
@@ -58,7 +68,7 @@ namespace Butler.Repository
             var entity = await this.Entity(appCommandSetId);
             if (entity != null)
             {
-                mapper.MapAppCommandSet(appCommandSet, entity);
+                mapper.MapAppCommandSet(appCommandSet, entity, JsonConvert.SerializeObject(await GetLink(appCommandSet)));
                 await SaveChanges();
                 return mapper.MapAppCommandSet(entity, new AppCommandSet());
             }
@@ -80,13 +90,6 @@ namespace Butler.Repository
             return await Entities.CountAsync() > 0;
         }
 
-        public virtual async Task AddRange(IEnumerable<AppCommandSetInput> appCommandSets)
-        {
-            var entities = appCommandSets.Select(i => mapper.MapAppCommandSet(i, new AppCommandSetEntity()));
-            this.dbContext.AppCommandSets.AddRange(entities);
-            await SaveChanges();
-        }
-
         protected virtual async Task SaveChanges()
         {
             await this.dbContext.SaveChangesAsync();
@@ -103,6 +106,17 @@ namespace Butler.Repository
         private Task<AppCommandSetEntity> Entity(Guid appCommandSetId)
         {
             return Entities.Where(i => i.AppCommandSetId == appCommandSetId).FirstOrDefaultAsync();
+        }
+
+        private async Task<Threax.AspNetCore.Halcyon.Client.HalLink> GetLink(AppCommandSetInput appCommandSet)
+        {
+            var command = (await commandClient.ListAppCommands(new AppCommandQuery()
+            {
+                AppCommandId = appCommandSet.AppCommandId,
+                Limit = 1
+            })).First();
+            var link = command.LinkForExecute;
+            return link;
         }
     }
 }
