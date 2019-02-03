@@ -29,6 +29,7 @@ namespace Microsoft.Extensions.DependencyInjection
             });
 
             services.TryAddScoped<IAppCommandClient, AppCommandClient>();
+            services.TryAddScoped<AppCommandValueProvider>();
 
             return services;
         }
