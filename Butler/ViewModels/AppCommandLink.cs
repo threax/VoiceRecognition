@@ -21,6 +21,9 @@ namespace Butler.ViewModels
     {
         public Guid AppCommandLinkId { get; set; }
 
+        [ValueProvider(typeof(Butler.Service.AppCommand.Client.AppCommandValueProvider))]
+        public Guid AppCommandId { get; set; }
+
         public Guid AppCommandSetId { get; set; }
 
         [UiOrder(0, 2147483646)]

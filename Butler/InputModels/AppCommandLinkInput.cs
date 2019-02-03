@@ -14,6 +14,9 @@ namespace Butler.InputModels
     [HalModel]
     public partial class AppCommandLinkInput : IAppCommandLink
     {
+        [ValueProvider(typeof(Butler.Service.AppCommand.Client.AppCommandValueProvider))]
+        public Guid AppCommandId { get; set; }
+
         public Guid AppCommandSetId { get; set; }
 
     }

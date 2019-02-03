@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Butler.Service.AppCommand.Client;
+using System;
 using Threax.AspNetCore.Models;
 
 namespace Butler.ModelSchemas
@@ -13,5 +11,8 @@ namespace Butler.ModelSchemas
         public String Json { get; set; }
 
         public AppCommandSet CommandSet { get; set; }
+
+        [DefineValueProvider(typeof(AppCommandValueProvider))]
+        public Guid AppCommandId { get; set; }
     }
 }

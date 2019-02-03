@@ -18,6 +18,8 @@ namespace Butler.Database
 
         public String Json { get; set; }
 
+        public Guid AppCommandId { get; set; }
+
         public Guid AppCommandSetId { get; set; }
 
         public AppCommandSetEntity AppCommandSet { get; set; }

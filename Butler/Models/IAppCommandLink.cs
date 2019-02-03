@@ -11,6 +11,8 @@ namespace Butler.Models
 {
     public partial interface IAppCommandLink 
     {
+        Guid AppCommandId { get; set; }
+
     }
 
     public partial interface IAppCommandLink_Json
