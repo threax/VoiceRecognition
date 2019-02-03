@@ -165,6 +165,8 @@ namespace Butler
 
             services.AddUserBuilderForUserWhitelistWithRoles();
 
+            services.AddCommandClient(o => Configuration.Bind("CommandClient", o));
+
             services.AddThreaxCSP(o =>
             {
                 o.AddDefault().AddNone();

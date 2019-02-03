@@ -6,13 +6,13 @@ using Threax.AspNetCore.Halcyon.Client;
 
 namespace Butler.Service.AppCommand.Client
 {
-    public class AppCommandClient
+    public class AppCommandEntry
     {
         private string url;
         private IHttpClientFactory fetcher;
         private Task<EntryPointResult> instanceTask = default(Task<EntryPointResult>);
 
-        public AppCommandClient(string url, IHttpClientFactory fetcher)
+        public AppCommandEntry(string url, IHttpClientFactory fetcher)
         {
             this.url = url;
             this.fetcher = fetcher;
