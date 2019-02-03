@@ -41,9 +41,10 @@ namespace Butler.Controllers.Api
 
         [HttpPost("[action]/{AppCommandSetId}")]
         [HalRel(nameof(Execute))]
-        public async Task Execute(Guid appCommandSetId, [FromServices] IAppCommandHalClientFactory halClientFactory)
+        public async Task<EntryPoint> Execute(Guid appCommandSetId, [FromServices] IAppCommandHalClientFactory halClientFactory)
         {
             await repo.Execute(appCommandSetId, halClientFactory);
+            return new EntryPoint(); //Have to return something, need to fix this bug
         }
 
         [HttpPost]
