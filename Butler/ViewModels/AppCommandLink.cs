@@ -13,10 +13,6 @@ using Threax.AspNetCore.Halcyon.Ext.ValueProviders;
 
 namespace Butler.ViewModels 
 {
-    [HalModel]
-    [HalSelfActionLink(typeof(AppCommandLinksController), nameof(AppCommandLinksController.Get))]
-    [HalActionLink(typeof(AppCommandLinksController), nameof(AppCommandLinksController.Update))]
-    [HalActionLink(typeof(AppCommandLinksController), nameof(AppCommandLinksController.Delete))]
     public partial class AppCommandLink : IAppCommandLink, IAppCommandLinkId, ICreatedModified
     {
         public Guid AppCommandLinkId { get; set; }

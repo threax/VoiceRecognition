@@ -16,8 +16,5 @@ namespace Butler.InputModels
     {
         [ValueProvider(typeof(Butler.Service.AppCommand.Client.AppCommandValueProvider))]
         public Guid AppCommandId { get; set; }
-
-        public Guid AppCommandSetId { get; set; }
-
     }
 }

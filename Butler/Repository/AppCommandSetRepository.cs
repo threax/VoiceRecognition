@@ -67,7 +67,7 @@ namespace Butler.Repository
             var entity = await this.Entity(id);
             if (entity != null)
             {
-                Entities.Remove(entity);
+                dbContext.AppCommandSets.Remove(entity);
                 await SaveChanges();
             }
         }
@@ -89,11 +89,11 @@ namespace Butler.Repository
             await this.dbContext.SaveChangesAsync();
         }
 
-        private DbSet<AppCommandSetEntity> Entities
+        private IQueryable<AppCommandSetEntity> Entities
         {
             get
             {
-                return dbContext.AppCommandSets;
+                return dbContext.AppCommandSets.Include(i => i.AppCommandLinks);
             }
         }
 

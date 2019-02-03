@@ -31,7 +31,7 @@ namespace Butler.ViewModels
 
         public KeyModifier MyProperty { get; set; }
 
-        public List<Guid> AppCommandLinkIds { get; set; }
+        public List<AppCommandLink> AppCommandLinks { get; set; }
 
         [UiOrder(0, 2147483646)]
         public DateTime Created { get; set; }
