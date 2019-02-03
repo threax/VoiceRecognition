@@ -16,7 +16,7 @@ namespace Butler
         /// <summary>
         /// A default role to edit values, you will probably want to replace this role.
         /// </summary>
-        public const String EditValues = "EditValues";
+        public const String EditCommands = nameof(EditCommands);
 
         /// <summary>
         /// All roles, any roles added above that you want to add to the database should be defined here.
@@ -24,7 +24,7 @@ namespace Butler
         /// <returns></returns>
         public static IEnumerable<String> DatabaseRoles()
         {
-            yield return EditValues;
+            yield return EditCommands;
         }
     }
 
@@ -35,10 +35,6 @@ namespace Butler
     [HalActionLink(CrudRels.Delete, RolesControllerRels.DeleteUser, typeof(RolesController))]
     public class RoleAssignments : ReflectedRoleAssignments
     {
-        /// <summary>
-        /// Also add a property for any roles you define, this way the ui can offer them for editing.
-        /// </summary>
-        [Display(Name = "Edit Values")]
-        public bool EditValues { get; set; }
+        public bool EditCommands { get; set; }
     }
 }

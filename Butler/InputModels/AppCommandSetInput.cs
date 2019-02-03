@@ -29,7 +29,7 @@ namespace Butler.InputModels
 
         public KeyModifier MyProperty { get; set; }
 
-        public List<Guid> AppCommandLinkIds { get; set; }
+        public List<AppCommandLinkInput> AppCommandLinks { get; set; }
 
     }
 }

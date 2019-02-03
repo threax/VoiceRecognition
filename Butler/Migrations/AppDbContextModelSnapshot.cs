@@ -14,24 +14,57 @@ namespace Butler.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.0-rtm-30799");
+                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687");
 
-            modelBuilder.Entity("Butler.Database.ValueEntity", b =>
+            modelBuilder.Entity("Butler.Database.AppCommandLinkEntity", b =>
                 {
-                    b.Property<Guid>("ValueId")
+                    b.Property<Guid>("AppCommandLinkId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("AppCommandId");
+
+                    b.Property<Guid>("AppCommandSetId");
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<string>("Json");
+
+                    b.Property<DateTime>("Modified");
+
+                    b.HasKey("AppCommandLinkId");
+
+                    b.HasIndex("AppCommandSetId");
+
+                    b.ToTable("AppCommandLinks");
+                });
+
+            modelBuilder.Entity("Butler.Database.AppCommandSetEntity", b =>
+                {
+                    b.Property<Guid>("AppCommandSetId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("Created");
 
+                    b.Property<string>("Key")
+                        .HasMaxLength(10);
+
                     b.Property<DateTime>("Modified");
+
+                    b.Property<int>("MyProperty");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(450);
 
-                    b.HasKey("ValueId");
+                    b.Property<string>("Response")
+                        .HasMaxLength(2000);
 
-                    b.ToTable("Values");
+                    b.Property<string>("VoicePrompt")
+                        .HasMaxLength(2000);
+
+                    b.HasKey("AppCommandSetId");
+
+                    b.ToTable("AppCommandSets");
                 });
 
             modelBuilder.Entity("Threax.AspNetCore.UserBuilder.Entities.Role", b =>
@@ -71,6 +104,14 @@ namespace Butler.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("spc.auth.UsersToRoles");
+                });
+
+            modelBuilder.Entity("Butler.Database.AppCommandLinkEntity", b =>
+                {
+                    b.HasOne("Butler.Database.AppCommandSetEntity", "AppCommandSet")
+                        .WithMany("AppCommandLinks")
+                        .HasForeignKey("AppCommandSetId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Threax.AspNetCore.UserBuilder.Entities.UserToRole", b =>

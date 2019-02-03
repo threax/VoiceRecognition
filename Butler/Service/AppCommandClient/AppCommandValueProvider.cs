@@ -8,16 +8,16 @@ namespace Butler.Service.AppCommand.Client
 {
     public class AppCommandValueProvider : LabelValuePairProvider
     {
-        private AppCommandClient entryPoint;
+        private IAppCommandClient client;
 
-        public AppCommandValueProvider(AppCommandClient entryPoint)
+        public AppCommandValueProvider(IAppCommandClient client)
         {
-            this.entryPoint = entryPoint;
+            this.client = client;
         }
 
         protected override async Task<IEnumerable<ILabelValuePair>> GetSources()
         {
-            var items = await this.entryPoint.ListAppCommands(new AppCommandQuery()
+            var items = await this.client.ListAppCommands(new AppCommandQuery()
             {
                 Limit = int.MaxValue
             });

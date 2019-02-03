@@ -8,6 +8,24 @@ namespace Butler.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "AppCommandSets",
+                columns: table => new
+                {
+                    AppCommandSetId = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(maxLength: 450, nullable: false),
+                    VoicePrompt = table.Column<string>(maxLength: 2000, nullable: true),
+                    Response = table.Column<string>(maxLength: 2000, nullable: true),
+                    Key = table.Column<string>(maxLength: 10, nullable: true),
+                    MyProperty = table.Column<int>(nullable: false),
+                    Created = table.Column<DateTime>(nullable: false),
+                    Modified = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppCommandSets", x => x.AppCommandSetId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "spc.auth.Roles",
                 columns: table => new
                 {
@@ -32,17 +50,25 @@ namespace Butler.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Values",
+                name: "AppCommandLinks",
                 columns: table => new
                 {
-                    ValueId = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(maxLength: 450, nullable: false),
+                    AppCommandLinkId = table.Column<Guid>(nullable: false),
+                    Json = table.Column<string>(nullable: true),
+                    AppCommandId = table.Column<Guid>(nullable: false),
+                    AppCommandSetId = table.Column<Guid>(nullable: false),
                     Created = table.Column<DateTime>(nullable: false),
                     Modified = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Values", x => x.ValueId);
+                    table.PrimaryKey("PK_AppCommandLinks", x => x.AppCommandLinkId);
+                    table.ForeignKey(
+                        name: "FK_AppCommandLinks_AppCommandSets_AppCommandSetId",
+                        column: x => x.AppCommandSetId,
+                        principalTable: "AppCommandSets",
+                        principalColumn: "AppCommandSetId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -70,6 +96,11 @@ namespace Butler.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_AppCommandLinks_AppCommandSetId",
+                table: "AppCommandLinks",
+                column: "AppCommandSetId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_spc.auth.UsersToRoles_RoleId",
                 table: "spc.auth.UsersToRoles",
                 column: "RoleId");
@@ -78,10 +109,13 @@ namespace Butler.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "AppCommandLinks");
+
+            migrationBuilder.DropTable(
                 name: "spc.auth.UsersToRoles");
 
             migrationBuilder.DropTable(
-                name: "Values");
+                name: "AppCommandSets");
 
             migrationBuilder.DropTable(
                 name: "spc.auth.Roles");

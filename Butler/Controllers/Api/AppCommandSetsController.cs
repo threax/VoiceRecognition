@@ -41,6 +41,7 @@ namespace Butler.Controllers.Api
         [HttpPost]
         [HalRel(CrudRels.Add)]
         [AutoValidate("Cannot add new appCommandSet")]
+        [Authorize(Roles = Roles.EditCommands)]
         public async Task<AppCommandSet> Add([FromBody]AppCommandSetInput appCommandSet)
         {
             return await repo.Add(appCommandSet);
@@ -49,6 +50,7 @@ namespace Butler.Controllers.Api
         [HttpPut("{AppCommandSetId}")]
         [HalRel(CrudRels.Update)]
         [AutoValidate("Cannot update appCommandSet")]
+        [Authorize(Roles = Roles.EditCommands)]
         public async Task<AppCommandSet> Update(Guid appCommandSetId, [FromBody]AppCommandSetInput appCommandSet)
         {
             return await repo.Update(appCommandSetId, appCommandSet);
@@ -56,6 +58,7 @@ namespace Butler.Controllers.Api
 
         [HttpDelete("{AppCommandSetId}")]
         [HalRel(CrudRels.Delete)]
+        [Authorize(Roles = Roles.EditCommands)]
         public async Task Delete(Guid appCommandSetId)
         {
             await repo.Delete(appCommandSetId);

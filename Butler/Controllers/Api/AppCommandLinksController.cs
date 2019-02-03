@@ -14,7 +14,7 @@ namespace Butler.Controllers.Api
 {
     [Route("api/[controller]")]
     [ResponseCache(NoStore = true)]
-    [Authorize(AuthenticationSchemes = AuthCoreSchemes.Bearer)]
+    [Authorize(AuthenticationSchemes = AuthCoreSchemes.Bearer, Roles = Roles.EditCommands)]
     public partial class AppCommandLinksController : Controller
     {
         private IAppCommandLinkRepository repo;
