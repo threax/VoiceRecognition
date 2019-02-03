@@ -1,4 +1,5 @@
-﻿using PiperHome;
+﻿using Butler.Client;
+using PiperHome;
 using PiperHome.Kinect;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Threax.AspNetCore.Halcyon.Client;
 
 namespace VoiceRecognition
 {
@@ -70,28 +72,46 @@ namespace VoiceRecognition
         /// the thread pool, so this will return immediately with no result.
         /// Call after all configuration has been set.
         /// </summary>
-        public async void fetchConfigurationAsync()
+        public async Task fetchConfigurationAsync()
         {
-            //Setup piper home client
-            PiperHomeClient client = new PiperHomeClient(Host);
-            VoiceConfig voiceConfig = null;
-            while (voiceConfig == null)
+            //Setup client
+            var options = new ButlerClientOptions()
             {
-                try
+                ServiceUrl = "https://localhost:44362/api",
+                ClientCredentials = new ClientCredentailsAccessTokenFactoryOptions()
                 {
-                    voiceConfig = await client.getVoiceConfigAsync();
-                    foundConfig = true;
+                    ClientId = "Butler.Test.Kinect",
+                    ClientSecret = "notyetdefined",
+                    IdServerHost = "https://localhost:44390",
+                    Scope = "Butler"
                 }
-                catch (Exception)
-                {
-                    Thread.Sleep(10000);
-                }
-            }
+            };
+
+            var factory = new ClientCredentialsAccessTokenFactory<EntryPointInjector>(options.ClientCredentials, new BearerHttpClientFactory<EntryPointInjector>(new DefaultHttpClientFactory()));
+            var injector = new EntryPointInjector(options.ServiceUrl, factory);
+            var entry = await injector.Load();
+            var commandResult = await entry.ListAppCommandSets(new AppCommandSetQuery()
+            {
+                Limit = int.MaxValue
+            });
+            //Try to download
+            //while (voiceConfig == null)
+            //{
+            //    try
+            //    {
+            //        voiceConfig = await client.getVoiceConfigAsync();
+            //        foundConfig = true;
+            //    }
+            //    catch (Exception)
+            //    {
+            //        Thread.Sleep(10000);
+            //    }
+            //}
 
             this.Invoke(new Action(() =>
             {
                 //Setup commands
-                commands = new VoiceCommands(client, voiceConfig);
+                commands = new VoiceCommands(commandResult);
                 commands.Restart += commands_Restart;
                 commands.PlaybackDeviceName = PlaybackDeviceName;
 

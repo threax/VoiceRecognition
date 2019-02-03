@@ -36,29 +36,5 @@ namespace Microsoft.Extensions.DependencyInjection
 
             return services;
         }
-
-        /// <summary>
-        /// Add the AppTemplate setup to forward the current user's access token from the to the service.
-        /// </summary>
-        /// <param name="services">The service collection.</param>
-        /// <param name="configure">The configure callback.</param>
-        /// <returns></returns>
-        public static IServiceCollection AddAppTemplateWithUserAccessToken(this IServiceCollection services, Action<ButlerClientOptions> configure)
-        {
-            var options = new ButlerClientOptions();
-            configure?.Invoke(options);
-
-            services.TryAddSingleton<IHttpClientFactory, DefaultHttpClientFactory>();
-            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.TryAddScoped<IHttpClientFactory<EntryPointInjector>>(s =>
-                new AddUserTokenHttpClientFactory<EntryPointInjector>(p => p.GetAccessToken(), s.GetRequiredService<IHttpContextAccessor>(), s.GetRequiredService<IHttpClientFactory>(), s.GetRequiredService<ILoggingInUserAccessor>()));
-            services.TryAddScoped<ILoggingInUserAccessor, LoggingInUserAccessor>();
-            services.TryAddScoped<EntryPointInjector>(s =>
-            {
-                return new EntryPointInjector(options.ServiceUrl, s.GetRequiredService<IHttpClientFactory<EntryPointInjector>>());
-            });
-
-            return services;
-        }
     }
 }

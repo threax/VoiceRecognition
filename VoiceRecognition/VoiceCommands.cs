@@ -9,26 +9,25 @@ using System.Drawing;
 using System.IO;
 using NAudio.Wave;
 using System.Threading;
+using Butler.Client;
 
 namespace PiperHome
 {
     public class VoiceCommands : IDisposable
     {
         SpeechSynthesizer synth = new SpeechSynthesizer();
-        private PiperHomeClient client;
-        private VoiceConfig voiceConfig;
         private bool unlocked = true;
         private DateTime lastLockedCommandTime = DateTime.Now;
+        private AppCommandSetCollectionResult appCommandSet;
 
         /// <summary>
         /// Called when restart is heard. Can be on any random thread will need to synchronize if important.
         /// </summary>
         public event Action Restart;
 
-        public VoiceCommands(PiperHomeClient client, VoiceConfig voiceConfig)
+        public VoiceCommands(AppCommandSetCollectionResult appCommandSet)
         {
-            this.client = client;
-            this.voiceConfig = voiceConfig;
+            this.appCommandSet = appCommandSet;
         }
 
         public void Dispose()
@@ -38,9 +37,9 @@ namespace PiperHome
 
         public IEnumerable<Tuple<String, Action>> getCommands()
         {
-            foreach (var command in voiceConfig.Commands)
+            foreach (var command in appCommandSet.Items.Where(i => i.Data.VoicePrompt != null))
             {
-                yield return Tuple.Create<String, Action>(command.Name, () => runCommand(command));
+                yield return Tuple.Create<String, Action>(command.Data.VoicePrompt, () => runCommand(command));
             }
 
             yield return Tuple.Create<String, Action>("host screen off", VoiceCommands.MonitorOff);
@@ -63,7 +62,7 @@ namespace PiperHome
             }
         }
 
-        private void runCommand(VoiceCommand command)
+        private void runCommand(AppCommandSetResult command)
         {
             if (unlocked)
             {
@@ -71,15 +70,15 @@ namespace PiperHome
                 {
                     Task t = Task.Run(async () =>
                     {
-                        var executeTask = command.executeAsync(client);
-                        speak(command.Message);
+                        var executeTask = command.Execute();
+                        speak(command.Data.Response);
                         await executeTask;
                     });
                     t.Wait();
                 }
                 catch(Exception)
                 {
-                    speak($"error running {command.Name}");
+                    speak($"error running {command.Data.VoicePrompt}");
                 }
             }
             else
