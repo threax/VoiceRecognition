@@ -107,6 +107,610 @@ export class RoleAssignmentsResult {
     }
 }
 
+export class AppCommandLinkResult {
+    private client: hal.HalEndpointClient;
+
+    constructor(client: hal.HalEndpointClient) {
+        this.client = client;
+    }
+
+    private strongData: AppCommandLink = undefined;
+    public get data(): AppCommandLink {
+        this.strongData = this.strongData || this.client.GetData<AppCommandLink>();
+        return this.strongData;
+    }
+
+    public refresh(): Promise<AppCommandLinkResult> {
+        return this.client.LoadLink("self")
+               .then(r => {
+                    return new AppCommandLinkResult(r);
+                });
+
+    }
+
+    public canRefresh(): boolean {
+        return this.client.HasLink("self");
+    }
+
+    public linkForRefresh(): hal.HalLink {
+        return this.client.GetLink("self");
+    }
+
+    public getRefreshDocs(query?: HalEndpointDocQuery): Promise<hal.HalEndpointDoc> {
+        return this.client.LoadLinkDoc("self", query)
+            .then(r => {
+                return r.GetData<hal.HalEndpointDoc>();
+            });
+    }
+
+    public hasRefreshDocs(): boolean {
+        return this.client.HasLinkDoc("self");
+    }
+
+    public update(data: AppCommandLinkInput): Promise<AppCommandLinkResult> {
+        return this.client.LoadLinkWithData("Update", data)
+               .then(r => {
+                    return new AppCommandLinkResult(r);
+                });
+
+    }
+
+    public canUpdate(): boolean {
+        return this.client.HasLink("Update");
+    }
+
+    public linkForUpdate(): hal.HalLink {
+        return this.client.GetLink("Update");
+    }
+
+    public getUpdateDocs(query?: HalEndpointDocQuery): Promise<hal.HalEndpointDoc> {
+        return this.client.LoadLinkDoc("Update", query)
+            .then(r => {
+                return r.GetData<hal.HalEndpointDoc>();
+            });
+    }
+
+    public hasUpdateDocs(): boolean {
+        return this.client.HasLinkDoc("Update");
+    }
+
+    public delete(): Promise<void> {
+        return this.client.LoadLink("Delete").then(hal.makeVoid);
+    }
+
+    public canDelete(): boolean {
+        return this.client.HasLink("Delete");
+    }
+
+    public linkForDelete(): hal.HalLink {
+        return this.client.GetLink("Delete");
+    }
+}
+
+export class AppCommandLinkCollectionResult {
+    private client: hal.HalEndpointClient;
+
+    constructor(client: hal.HalEndpointClient) {
+        this.client = client;
+    }
+
+    private strongData: AppCommandLinkCollection = undefined;
+    public get data(): AppCommandLinkCollection {
+        this.strongData = this.strongData || this.client.GetData<AppCommandLinkCollection>();
+        return this.strongData;
+    }
+
+    private itemsStrong: AppCommandLinkResult[];
+    public get items(): AppCommandLinkResult[] {
+        if (this.itemsStrong === undefined) {
+            var embeds = this.client.GetEmbed("values");
+            var clients = embeds.GetAllClients();
+            this.itemsStrong = [];
+            for (var i = 0; i < clients.length; ++i) {
+                this.itemsStrong.push(new AppCommandLinkResult(clients[i]));
+            }
+        }
+        return this.itemsStrong;
+    }
+
+    public refresh(): Promise<AppCommandLinkCollectionResult> {
+        return this.client.LoadLink("self")
+               .then(r => {
+                    return new AppCommandLinkCollectionResult(r);
+                });
+
+    }
+
+    public canRefresh(): boolean {
+        return this.client.HasLink("self");
+    }
+
+    public linkForRefresh(): hal.HalLink {
+        return this.client.GetLink("self");
+    }
+
+    public getRefreshDocs(query?: HalEndpointDocQuery): Promise<hal.HalEndpointDoc> {
+        return this.client.LoadLinkDoc("self", query)
+            .then(r => {
+                return r.GetData<hal.HalEndpointDoc>();
+            });
+    }
+
+    public hasRefreshDocs(): boolean {
+        return this.client.HasLinkDoc("self");
+    }
+
+    public getGetDocs(query?: HalEndpointDocQuery): Promise<hal.HalEndpointDoc> {
+        return this.client.LoadLinkDoc("Get", query)
+            .then(r => {
+                return r.GetData<hal.HalEndpointDoc>();
+            });
+    }
+
+    public hasGetDocs(): boolean {
+        return this.client.HasLinkDoc("Get");
+    }
+
+    public getListDocs(query?: HalEndpointDocQuery): Promise<hal.HalEndpointDoc> {
+        return this.client.LoadLinkDoc("List", query)
+            .then(r => {
+                return r.GetData<hal.HalEndpointDoc>();
+            });
+    }
+
+    public hasListDocs(): boolean {
+        return this.client.HasLinkDoc("List");
+    }
+
+    public getUpdateDocs(query?: HalEndpointDocQuery): Promise<hal.HalEndpointDoc> {
+        return this.client.LoadLinkDoc("Update", query)
+            .then(r => {
+                return r.GetData<hal.HalEndpointDoc>();
+            });
+    }
+
+    public hasUpdateDocs(): boolean {
+        return this.client.HasLinkDoc("Update");
+    }
+
+    public add(data: AppCommandLinkInput): Promise<AppCommandLinkResult> {
+        return this.client.LoadLinkWithData("Add", data)
+               .then(r => {
+                    return new AppCommandLinkResult(r);
+                });
+
+    }
+
+    public canAdd(): boolean {
+        return this.client.HasLink("Add");
+    }
+
+    public linkForAdd(): hal.HalLink {
+        return this.client.GetLink("Add");
+    }
+
+    public getAddDocs(query?: HalEndpointDocQuery): Promise<hal.HalEndpointDoc> {
+        return this.client.LoadLinkDoc("Add", query)
+            .then(r => {
+                return r.GetData<hal.HalEndpointDoc>();
+            });
+    }
+
+    public hasAddDocs(): boolean {
+        return this.client.HasLinkDoc("Add");
+    }
+
+    public next(): Promise<AppCommandLinkCollectionResult> {
+        return this.client.LoadLink("next")
+               .then(r => {
+                    return new AppCommandLinkCollectionResult(r);
+                });
+
+    }
+
+    public canNext(): boolean {
+        return this.client.HasLink("next");
+    }
+
+    public linkForNext(): hal.HalLink {
+        return this.client.GetLink("next");
+    }
+
+    public getNextDocs(query?: HalEndpointDocQuery): Promise<hal.HalEndpointDoc> {
+        return this.client.LoadLinkDoc("next", query)
+            .then(r => {
+                return r.GetData<hal.HalEndpointDoc>();
+            });
+    }
+
+    public hasNextDocs(): boolean {
+        return this.client.HasLinkDoc("next");
+    }
+
+    public previous(): Promise<AppCommandLinkCollectionResult> {
+        return this.client.LoadLink("previous")
+               .then(r => {
+                    return new AppCommandLinkCollectionResult(r);
+                });
+
+    }
+
+    public canPrevious(): boolean {
+        return this.client.HasLink("previous");
+    }
+
+    public linkForPrevious(): hal.HalLink {
+        return this.client.GetLink("previous");
+    }
+
+    public getPreviousDocs(query?: HalEndpointDocQuery): Promise<hal.HalEndpointDoc> {
+        return this.client.LoadLinkDoc("previous", query)
+            .then(r => {
+                return r.GetData<hal.HalEndpointDoc>();
+            });
+    }
+
+    public hasPreviousDocs(): boolean {
+        return this.client.HasLinkDoc("previous");
+    }
+
+    public first(): Promise<AppCommandLinkCollectionResult> {
+        return this.client.LoadLink("first")
+               .then(r => {
+                    return new AppCommandLinkCollectionResult(r);
+                });
+
+    }
+
+    public canFirst(): boolean {
+        return this.client.HasLink("first");
+    }
+
+    public linkForFirst(): hal.HalLink {
+        return this.client.GetLink("first");
+    }
+
+    public getFirstDocs(query?: HalEndpointDocQuery): Promise<hal.HalEndpointDoc> {
+        return this.client.LoadLinkDoc("first", query)
+            .then(r => {
+                return r.GetData<hal.HalEndpointDoc>();
+            });
+    }
+
+    public hasFirstDocs(): boolean {
+        return this.client.HasLinkDoc("first");
+    }
+
+    public last(): Promise<AppCommandLinkCollectionResult> {
+        return this.client.LoadLink("last")
+               .then(r => {
+                    return new AppCommandLinkCollectionResult(r);
+                });
+
+    }
+
+    public canLast(): boolean {
+        return this.client.HasLink("last");
+    }
+
+    public linkForLast(): hal.HalLink {
+        return this.client.GetLink("last");
+    }
+
+    public getLastDocs(query?: HalEndpointDocQuery): Promise<hal.HalEndpointDoc> {
+        return this.client.LoadLinkDoc("last", query)
+            .then(r => {
+                return r.GetData<hal.HalEndpointDoc>();
+            });
+    }
+
+    public hasLastDocs(): boolean {
+        return this.client.HasLinkDoc("last");
+    }
+}
+
+export class AppCommandSetResult {
+    private client: hal.HalEndpointClient;
+
+    constructor(client: hal.HalEndpointClient) {
+        this.client = client;
+    }
+
+    private strongData: AppCommandSet = undefined;
+    public get data(): AppCommandSet {
+        this.strongData = this.strongData || this.client.GetData<AppCommandSet>();
+        return this.strongData;
+    }
+
+    public refresh(): Promise<AppCommandSetResult> {
+        return this.client.LoadLink("self")
+               .then(r => {
+                    return new AppCommandSetResult(r);
+                });
+
+    }
+
+    public canRefresh(): boolean {
+        return this.client.HasLink("self");
+    }
+
+    public linkForRefresh(): hal.HalLink {
+        return this.client.GetLink("self");
+    }
+
+    public getRefreshDocs(query?: HalEndpointDocQuery): Promise<hal.HalEndpointDoc> {
+        return this.client.LoadLinkDoc("self", query)
+            .then(r => {
+                return r.GetData<hal.HalEndpointDoc>();
+            });
+    }
+
+    public hasRefreshDocs(): boolean {
+        return this.client.HasLinkDoc("self");
+    }
+
+    public update(data: AppCommandSetInput): Promise<AppCommandSetResult> {
+        return this.client.LoadLinkWithData("Update", data)
+               .then(r => {
+                    return new AppCommandSetResult(r);
+                });
+
+    }
+
+    public canUpdate(): boolean {
+        return this.client.HasLink("Update");
+    }
+
+    public linkForUpdate(): hal.HalLink {
+        return this.client.GetLink("Update");
+    }
+
+    public getUpdateDocs(query?: HalEndpointDocQuery): Promise<hal.HalEndpointDoc> {
+        return this.client.LoadLinkDoc("Update", query)
+            .then(r => {
+                return r.GetData<hal.HalEndpointDoc>();
+            });
+    }
+
+    public hasUpdateDocs(): boolean {
+        return this.client.HasLinkDoc("Update");
+    }
+
+    public delete(): Promise<void> {
+        return this.client.LoadLink("Delete").then(hal.makeVoid);
+    }
+
+    public canDelete(): boolean {
+        return this.client.HasLink("Delete");
+    }
+
+    public linkForDelete(): hal.HalLink {
+        return this.client.GetLink("Delete");
+    }
+}
+
+export class AppCommandSetCollectionResult {
+    private client: hal.HalEndpointClient;
+
+    constructor(client: hal.HalEndpointClient) {
+        this.client = client;
+    }
+
+    private strongData: AppCommandSetCollection = undefined;
+    public get data(): AppCommandSetCollection {
+        this.strongData = this.strongData || this.client.GetData<AppCommandSetCollection>();
+        return this.strongData;
+    }
+
+    private itemsStrong: AppCommandSetResult[];
+    public get items(): AppCommandSetResult[] {
+        if (this.itemsStrong === undefined) {
+            var embeds = this.client.GetEmbed("values");
+            var clients = embeds.GetAllClients();
+            this.itemsStrong = [];
+            for (var i = 0; i < clients.length; ++i) {
+                this.itemsStrong.push(new AppCommandSetResult(clients[i]));
+            }
+        }
+        return this.itemsStrong;
+    }
+
+    public refresh(): Promise<AppCommandSetCollectionResult> {
+        return this.client.LoadLink("self")
+               .then(r => {
+                    return new AppCommandSetCollectionResult(r);
+                });
+
+    }
+
+    public canRefresh(): boolean {
+        return this.client.HasLink("self");
+    }
+
+    public linkForRefresh(): hal.HalLink {
+        return this.client.GetLink("self");
+    }
+
+    public getRefreshDocs(query?: HalEndpointDocQuery): Promise<hal.HalEndpointDoc> {
+        return this.client.LoadLinkDoc("self", query)
+            .then(r => {
+                return r.GetData<hal.HalEndpointDoc>();
+            });
+    }
+
+    public hasRefreshDocs(): boolean {
+        return this.client.HasLinkDoc("self");
+    }
+
+    public getGetDocs(query?: HalEndpointDocQuery): Promise<hal.HalEndpointDoc> {
+        return this.client.LoadLinkDoc("Get", query)
+            .then(r => {
+                return r.GetData<hal.HalEndpointDoc>();
+            });
+    }
+
+    public hasGetDocs(): boolean {
+        return this.client.HasLinkDoc("Get");
+    }
+
+    public getListDocs(query?: HalEndpointDocQuery): Promise<hal.HalEndpointDoc> {
+        return this.client.LoadLinkDoc("List", query)
+            .then(r => {
+                return r.GetData<hal.HalEndpointDoc>();
+            });
+    }
+
+    public hasListDocs(): boolean {
+        return this.client.HasLinkDoc("List");
+    }
+
+    public getUpdateDocs(query?: HalEndpointDocQuery): Promise<hal.HalEndpointDoc> {
+        return this.client.LoadLinkDoc("Update", query)
+            .then(r => {
+                return r.GetData<hal.HalEndpointDoc>();
+            });
+    }
+
+    public hasUpdateDocs(): boolean {
+        return this.client.HasLinkDoc("Update");
+    }
+
+    public add(data: AppCommandSetInput): Promise<AppCommandSetResult> {
+        return this.client.LoadLinkWithData("Add", data)
+               .then(r => {
+                    return new AppCommandSetResult(r);
+                });
+
+    }
+
+    public canAdd(): boolean {
+        return this.client.HasLink("Add");
+    }
+
+    public linkForAdd(): hal.HalLink {
+        return this.client.GetLink("Add");
+    }
+
+    public getAddDocs(query?: HalEndpointDocQuery): Promise<hal.HalEndpointDoc> {
+        return this.client.LoadLinkDoc("Add", query)
+            .then(r => {
+                return r.GetData<hal.HalEndpointDoc>();
+            });
+    }
+
+    public hasAddDocs(): boolean {
+        return this.client.HasLinkDoc("Add");
+    }
+
+    public next(): Promise<AppCommandSetCollectionResult> {
+        return this.client.LoadLink("next")
+               .then(r => {
+                    return new AppCommandSetCollectionResult(r);
+                });
+
+    }
+
+    public canNext(): boolean {
+        return this.client.HasLink("next");
+    }
+
+    public linkForNext(): hal.HalLink {
+        return this.client.GetLink("next");
+    }
+
+    public getNextDocs(query?: HalEndpointDocQuery): Promise<hal.HalEndpointDoc> {
+        return this.client.LoadLinkDoc("next", query)
+            .then(r => {
+                return r.GetData<hal.HalEndpointDoc>();
+            });
+    }
+
+    public hasNextDocs(): boolean {
+        return this.client.HasLinkDoc("next");
+    }
+
+    public previous(): Promise<AppCommandSetCollectionResult> {
+        return this.client.LoadLink("previous")
+               .then(r => {
+                    return new AppCommandSetCollectionResult(r);
+                });
+
+    }
+
+    public canPrevious(): boolean {
+        return this.client.HasLink("previous");
+    }
+
+    public linkForPrevious(): hal.HalLink {
+        return this.client.GetLink("previous");
+    }
+
+    public getPreviousDocs(query?: HalEndpointDocQuery): Promise<hal.HalEndpointDoc> {
+        return this.client.LoadLinkDoc("previous", query)
+            .then(r => {
+                return r.GetData<hal.HalEndpointDoc>();
+            });
+    }
+
+    public hasPreviousDocs(): boolean {
+        return this.client.HasLinkDoc("previous");
+    }
+
+    public first(): Promise<AppCommandSetCollectionResult> {
+        return this.client.LoadLink("first")
+               .then(r => {
+                    return new AppCommandSetCollectionResult(r);
+                });
+
+    }
+
+    public canFirst(): boolean {
+        return this.client.HasLink("first");
+    }
+
+    public linkForFirst(): hal.HalLink {
+        return this.client.GetLink("first");
+    }
+
+    public getFirstDocs(query?: HalEndpointDocQuery): Promise<hal.HalEndpointDoc> {
+        return this.client.LoadLinkDoc("first", query)
+            .then(r => {
+                return r.GetData<hal.HalEndpointDoc>();
+            });
+    }
+
+    public hasFirstDocs(): boolean {
+        return this.client.HasLinkDoc("first");
+    }
+
+    public last(): Promise<AppCommandSetCollectionResult> {
+        return this.client.LoadLink("last")
+               .then(r => {
+                    return new AppCommandSetCollectionResult(r);
+                });
+
+    }
+
+    public canLast(): boolean {
+        return this.client.HasLink("last");
+    }
+
+    public linkForLast(): hal.HalLink {
+        return this.client.GetLink("last");
+    }
+
+    public getLastDocs(query?: HalEndpointDocQuery): Promise<hal.HalEndpointDoc> {
+        return this.client.LoadLinkDoc("last", query)
+            .then(r => {
+                return r.GetData<hal.HalEndpointDoc>();
+            });
+    }
+
+    public hasLastDocs(): boolean {
+        return this.client.HasLinkDoc("last");
+    }
+}
+
 export class EntryPointInjector {
     private url: string;
     private fetcher: hal.Fetcher;
@@ -147,6 +751,114 @@ export class EntryPointResult {
     public get data(): EntryPoint {
         this.strongData = this.strongData || this.client.GetData<EntryPoint>();
         return this.strongData;
+    }
+
+    public listAppCommandLinks(data: AppCommandLinkQuery): Promise<AppCommandLinkCollectionResult> {
+        return this.client.LoadLinkWithData("ListAppCommandLinks", data)
+               .then(r => {
+                    return new AppCommandLinkCollectionResult(r);
+                });
+
+    }
+
+    public canListAppCommandLinks(): boolean {
+        return this.client.HasLink("ListAppCommandLinks");
+    }
+
+    public linkForListAppCommandLinks(): hal.HalLink {
+        return this.client.GetLink("ListAppCommandLinks");
+    }
+
+    public getListAppCommandLinksDocs(query?: HalEndpointDocQuery): Promise<hal.HalEndpointDoc> {
+        return this.client.LoadLinkDoc("ListAppCommandLinks", query)
+            .then(r => {
+                return r.GetData<hal.HalEndpointDoc>();
+            });
+    }
+
+    public hasListAppCommandLinksDocs(): boolean {
+        return this.client.HasLinkDoc("ListAppCommandLinks");
+    }
+
+    public addAppCommandLink(data: AppCommandLinkInput): Promise<AppCommandLinkResult> {
+        return this.client.LoadLinkWithData("AddAppCommandLink", data)
+               .then(r => {
+                    return new AppCommandLinkResult(r);
+                });
+
+    }
+
+    public canAddAppCommandLink(): boolean {
+        return this.client.HasLink("AddAppCommandLink");
+    }
+
+    public linkForAddAppCommandLink(): hal.HalLink {
+        return this.client.GetLink("AddAppCommandLink");
+    }
+
+    public getAddAppCommandLinkDocs(query?: HalEndpointDocQuery): Promise<hal.HalEndpointDoc> {
+        return this.client.LoadLinkDoc("AddAppCommandLink", query)
+            .then(r => {
+                return r.GetData<hal.HalEndpointDoc>();
+            });
+    }
+
+    public hasAddAppCommandLinkDocs(): boolean {
+        return this.client.HasLinkDoc("AddAppCommandLink");
+    }
+
+    public listAppCommandSets(data: AppCommandSetQuery): Promise<AppCommandSetCollectionResult> {
+        return this.client.LoadLinkWithData("ListAppCommandSets", data)
+               .then(r => {
+                    return new AppCommandSetCollectionResult(r);
+                });
+
+    }
+
+    public canListAppCommandSets(): boolean {
+        return this.client.HasLink("ListAppCommandSets");
+    }
+
+    public linkForListAppCommandSets(): hal.HalLink {
+        return this.client.GetLink("ListAppCommandSets");
+    }
+
+    public getListAppCommandSetsDocs(query?: HalEndpointDocQuery): Promise<hal.HalEndpointDoc> {
+        return this.client.LoadLinkDoc("ListAppCommandSets", query)
+            .then(r => {
+                return r.GetData<hal.HalEndpointDoc>();
+            });
+    }
+
+    public hasListAppCommandSetsDocs(): boolean {
+        return this.client.HasLinkDoc("ListAppCommandSets");
+    }
+
+    public addAppCommandSet(data: AppCommandSetInput): Promise<AppCommandSetResult> {
+        return this.client.LoadLinkWithData("AddAppCommandSet", data)
+               .then(r => {
+                    return new AppCommandSetResult(r);
+                });
+
+    }
+
+    public canAddAppCommandSet(): boolean {
+        return this.client.HasLink("AddAppCommandSet");
+    }
+
+    public linkForAddAppCommandSet(): hal.HalLink {
+        return this.client.GetLink("AddAppCommandSet");
+    }
+
+    public getAddAppCommandSetDocs(query?: HalEndpointDocQuery): Promise<hal.HalEndpointDoc> {
+        return this.client.LoadLinkDoc("AddAppCommandSet", query)
+            .then(r => {
+                return r.GetData<hal.HalEndpointDoc>();
+            });
+    }
+
+    public hasAddAppCommandSetDocs(): boolean {
+        return this.client.HasLinkDoc("AddAppCommandSet");
     }
 
     public refresh(): Promise<EntryPointResult> {
@@ -1104,6 +1816,87 @@ export interface RoleAssignments {
     name?: string;
     editRoles?: boolean;
     superAdmin?: boolean;
+}
+
+export interface AppCommandLink {
+    appCommandLinkId?: string;
+    appCommandSetId?: string;
+    created?: string;
+    modified?: string;
+}
+
+export interface AppCommandLinkInput {
+    appCommandSetId?: string;
+}
+
+export interface AppCommandLinkCollection {
+    /** The number of pages (item number = Offset * Limit) into the collection to query. */
+    offset?: number;
+    /** Lookup a appCommandLink by id. */
+    appCommandLinkId?: string;
+    total?: number;
+    /** The limit of the number of items to return. */
+    limit?: number;
+}
+
+export interface AppCommandLinkQuery {
+    /** Lookup a appCommandLink by id. */
+    appCommandLinkId?: string;
+    /** The number of pages (item number = Offset * Limit) into the collection to query. */
+    offset?: number;
+    /** The limit of the number of items to return. */
+    limit?: number;
+}
+
+export enum KeyModifier {
+    None = <any>"None", 
+    Ctrl = <any>"Ctrl", 
+    Alt = <any>"Alt", 
+    CtrlAlt = <any>"CtrlAlt", 
+    Shift = <any>"Shift", 
+    CtrlShift = <any>"CtrlShift", 
+    AltShift = <any>"AltShift", 
+    CtrlAltShift = <any>"CtrlAltShift", 
+}
+
+export interface AppCommandSet {
+    appCommandSetId?: string;
+    name?: string;
+    voicePrompt?: string;
+    response?: string;
+    key?: string;
+    myProperty?: KeyModifier;
+    appCommandLinkIds?: string[];
+    created?: string;
+    modified?: string;
+}
+
+export interface AppCommandSetInput {
+    name: string;
+    voicePrompt?: string;
+    response?: string;
+    key?: string;
+    myProperty?: KeyModifier;
+    appCommandLinkIds?: string[];
+}
+
+export interface AppCommandSetCollection {
+    /** The number of pages (item number = Offset * Limit) into the collection to query. */
+    offset?: number;
+    /** Lookup a appCommandSet by id. */
+    appCommandSetId?: string;
+    total?: number;
+    /** The limit of the number of items to return. */
+    limit?: number;
+}
+
+export interface AppCommandSetQuery {
+    /** Lookup a appCommandSet by id. */
+    appCommandSetId?: string;
+    /** The number of pages (item number = Offset * Limit) into the collection to query. */
+    offset?: number;
+    /** The limit of the number of items to return. */
+    limit?: number;
 }
 
 export interface EntryPoint {
