@@ -7,6 +7,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Butler", "Butler\Butler.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Butler.Client", "Butler.Client\Butler.Client.csproj", "{1ABBFBF3-D34B-4831-9170-3CE0507A13B7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KinectCore", "KinectCore\KinectCore.csproj", "{0BE25C29-D364-460F-9F39-AC24DC3C2620}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kinect1Lib", "Kinect1Lib\Kinect1Lib.csproj", "{EC20CEBE-F4BC-4AAD-BE77-D0A7B07B9D24}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kinect2Lib", "Kinect2Lib\Kinect2Lib.csproj", "{81E72FD8-EAB7-4C69-8E82-22971B973DCB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KinectDriver", "KinectDriver\KinectDriver.csproj", "{90378A5A-A38C-4F54-8FAF-3CF3A73A6279}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoiceRecognition", "VoiceRecognition\VoiceRecognition.csproj", "{A712CECD-675D-4F13-AEE9-28214E0F32EB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +31,26 @@ Global
 		{1ABBFBF3-D34B-4831-9170-3CE0507A13B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1ABBFBF3-D34B-4831-9170-3CE0507A13B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1ABBFBF3-D34B-4831-9170-3CE0507A13B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BE25C29-D364-460F-9F39-AC24DC3C2620}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BE25C29-D364-460F-9F39-AC24DC3C2620}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BE25C29-D364-460F-9F39-AC24DC3C2620}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BE25C29-D364-460F-9F39-AC24DC3C2620}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC20CEBE-F4BC-4AAD-BE77-D0A7B07B9D24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC20CEBE-F4BC-4AAD-BE77-D0A7B07B9D24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC20CEBE-F4BC-4AAD-BE77-D0A7B07B9D24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC20CEBE-F4BC-4AAD-BE77-D0A7B07B9D24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81E72FD8-EAB7-4C69-8E82-22971B973DCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81E72FD8-EAB7-4C69-8E82-22971B973DCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81E72FD8-EAB7-4C69-8E82-22971B973DCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81E72FD8-EAB7-4C69-8E82-22971B973DCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90378A5A-A38C-4F54-8FAF-3CF3A73A6279}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90378A5A-A38C-4F54-8FAF-3CF3A73A6279}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90378A5A-A38C-4F54-8FAF-3CF3A73A6279}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90378A5A-A38C-4F54-8FAF-3CF3A73A6279}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A712CECD-675D-4F13-AEE9-28214E0F32EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A712CECD-675D-4F13-AEE9-28214E0F32EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A712CECD-675D-4F13-AEE9-28214E0F32EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A712CECD-675D-4F13-AEE9-28214E0F32EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
