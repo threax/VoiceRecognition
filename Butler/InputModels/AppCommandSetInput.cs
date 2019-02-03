@@ -27,7 +27,7 @@ namespace Butler.InputModels
         [MaxLength(10, ErrorMessage = "Key must be less than 10 characters.")]
         public String Key { get; set; }
 
-        public KeyModifier MyProperty { get; set; }
+        public KeyModifier Modifier { get; set; }
 
         public List<AppCommandLinkInput> AppCommandLinks { get; set; }
 

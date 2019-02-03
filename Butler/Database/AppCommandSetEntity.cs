@@ -29,7 +29,7 @@ namespace Butler.Database
         [MaxLength(10, ErrorMessage = "Key must be less than 10 characters.")]
         public String Key { get; set; }
 
-        public KeyModifier MyProperty { get; set; }
+        public KeyModifier Modifier { get; set; }
 
         public List<AppCommandLinkEntity> AppCommandLinks { get; set; }
 

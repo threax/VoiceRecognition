@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Butler.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190203185850_initial")]
+    [Migration("20190203194707_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -52,7 +52,7 @@ namespace Butler.Migrations
 
                     b.Property<DateTime>("Modified");
 
-                    b.Property<int>("MyProperty");
+                    b.Property<int>("Modifier");
 
                     b.Property<string>("Name")
                         .IsRequired()

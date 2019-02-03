@@ -29,7 +29,7 @@ namespace Butler.ViewModels
 
         public String Key { get; set; }
 
-        public KeyModifier MyProperty { get; set; }
+        public KeyModifier Modifier { get; set; }
 
         public List<AppCommandLink> AppCommandLinks { get; set; }
 

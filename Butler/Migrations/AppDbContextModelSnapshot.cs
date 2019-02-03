@@ -50,7 +50,7 @@ namespace Butler.Migrations
 
                     b.Property<DateTime>("Modified");
 
-                    b.Property<int>("MyProperty");
+                    b.Property<int>("Modifier");
 
                     b.Property<string>("Name")
                         .IsRequired()

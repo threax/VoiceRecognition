@@ -16,7 +16,7 @@ namespace Butler.Migrations
                     VoicePrompt = table.Column<string>(maxLength: 2000, nullable: true),
                     Response = table.Column<string>(maxLength: 2000, nullable: true),
                     Key = table.Column<string>(maxLength: 10, nullable: true),
-                    MyProperty = table.Column<int>(nullable: false),
+                    Modifier = table.Column<int>(nullable: false),
                     Created = table.Column<DateTime>(nullable: false),
                     Modified = table.Column<DateTime>(nullable: false)
                 },

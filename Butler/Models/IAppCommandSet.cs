@@ -19,7 +19,7 @@ namespace Butler.Models
 
         String Key { get; set; }
 
-        KeyModifier MyProperty { get; set; }
+        KeyModifier Modifier { get; set; }
 
     }
 
