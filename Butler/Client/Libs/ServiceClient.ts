@@ -147,8 +147,12 @@ export class AppCommandSetResult {
         return this.client.HasLinkDoc("self");
     }
 
-    public execute(): Promise<void> {
-        return this.client.LoadLink("Execute").then(hal.makeVoid);
+    public execute(): Promise<EntryPointResult> {
+        return this.client.LoadLink("Execute")
+               .then(r => {
+                    return new EntryPointResult(r);
+                });
+
     }
 
     public canExecute(): boolean {
@@ -157,6 +161,17 @@ export class AppCommandSetResult {
 
     public linkForExecute(): hal.HalLink {
         return this.client.GetLink("Execute");
+    }
+
+    public getExecuteDocs(query?: HalEndpointDocQuery): Promise<hal.HalEndpointDoc> {
+        return this.client.LoadLinkDoc("Execute", query)
+            .then(r => {
+                return r.GetData<hal.HalEndpointDoc>();
+            });
+    }
+
+    public hasExecuteDocs(): boolean {
+        return this.client.HasLinkDoc("Execute");
     }
 
     public update(data: AppCommandSetInput): Promise<AppCommandSetResult> {
@@ -1140,6 +1155,9 @@ export interface AppCommandSet {
     modified?: string;
 }
 
+export interface EntryPoint {
+}
+
 export interface AppCommandSetInput {
     name: string;
     voicePrompt?: string;
@@ -1166,9 +1184,6 @@ export interface AppCommandSetQuery {
     offset?: number;
     /** The limit of the number of items to return. */
     limit?: number;
-}
-
-export interface EntryPoint {
 }
 
 export interface RolesQuery {

@@ -204,9 +204,11 @@ public class AppCommandSetResult
         return this.client.HasLinkDoc("self");
     }
 
-    public async Task Execute() 
+    public async Task<EntryPointResult> Execute() 
     {
         var result = await this.client.LoadLink("Execute");
+        return new EntryPointResult(result);
+
     }
 
     public bool CanExecute 
@@ -223,6 +225,16 @@ public class AppCommandSetResult
         {
             return this.client.GetLink("Execute");
         }
+    }
+
+    public async Task<HalEndpointDoc> GetExecuteDocs(HalEndpointDocQuery query = null) 
+    {
+        var result = await this.client.LoadLinkDoc("Execute", query);
+        return result.GetData<HalEndpointDoc>();
+    }
+
+    public bool HasExecuteDocs() {
+        return this.client.HasLinkDoc("Execute");
     }
 
     public async Task<AppCommandSetResult> Update(AppCommandSetInput data) 
@@ -1486,6 +1498,21 @@ namespace Butler.Client
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "9.10.49.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class EntryPoint 
+    {
+        public string ToJson() 
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
+        }
+        
+        public static EntryPoint FromJson(string data)
+        {
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<EntryPoint>(data);
+        }
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "9.10.49.0 (Newtonsoft.Json v11.0.0.0)")]
     public partial class AppCommandSetInput 
     {
         [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -1572,21 +1599,6 @@ namespace Butler.Client
         public static AppCommandSetQuery FromJson(string data)
         {
             return Newtonsoft.Json.JsonConvert.DeserializeObject<AppCommandSetQuery>(data);
-        }
-    
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "9.10.49.0 (Newtonsoft.Json v11.0.0.0)")]
-    public partial class EntryPoint 
-    {
-        public string ToJson() 
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
-        }
-        
-        public static EntryPoint FromJson(string data)
-        {
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<EntryPoint>(data);
         }
     
     }
