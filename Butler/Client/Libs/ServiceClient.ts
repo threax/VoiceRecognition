@@ -147,12 +147,8 @@ export class AppCommandSetResult {
         return this.client.HasLinkDoc("self");
     }
 
-    public execute(): Promise<AppCommandSetResult> {
-        return this.client.LoadLink("Execute")
-               .then(r => {
-                    return new AppCommandSetResult(r);
-                });
-
+    public execute(): Promise<void> {
+        return this.client.LoadLink("Execute").then(hal.makeVoid);
     }
 
     public canExecute(): boolean {
@@ -161,17 +157,6 @@ export class AppCommandSetResult {
 
     public linkForExecute(): hal.HalLink {
         return this.client.GetLink("Execute");
-    }
-
-    public getExecuteDocs(query?: HalEndpointDocQuery): Promise<hal.HalEndpointDoc> {
-        return this.client.LoadLinkDoc("Execute", query)
-            .then(r => {
-                return r.GetData<hal.HalEndpointDoc>();
-            });
-    }
-
-    public hasExecuteDocs(): boolean {
-        return this.client.HasLinkDoc("Execute");
     }
 
     public update(data: AppCommandSetInput): Promise<AppCommandSetResult> {
