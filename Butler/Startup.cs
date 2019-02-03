@@ -117,6 +117,12 @@ namespace Butler
                 Configuration.Bind("IdServerClient", o);
             });
 
+            services.AddCommandClient(o =>
+            {
+                o.GetSharedClientCredentials = s => Configuration.Bind("SharedClientCredentials", s);
+                Configuration.Bind("CommandClient", o);
+            });
+
             // Add framework services.
             services.AddMvc(o =>
             {
@@ -164,8 +170,6 @@ namespace Butler
             });
 
             services.AddUserBuilderForUserWhitelistWithRoles();
-
-            services.AddCommandClient(o => Configuration.Bind("CommandClient", o));
 
             services.AddThreaxCSP(o =>
             {

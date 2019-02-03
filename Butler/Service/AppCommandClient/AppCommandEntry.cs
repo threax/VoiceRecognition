@@ -18,6 +18,8 @@ namespace Butler.Service.AppCommand.Client
             this.fetcher = fetcher;
         }
 
+        public String Url => url;
+
         public Task<EntryPointResult> Load()
         {
             if (this.instanceTask == default(Task<EntryPointResult>))

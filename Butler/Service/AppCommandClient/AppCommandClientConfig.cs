@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,5 +18,11 @@ namespace Butler.Service.AppCommand.Client
         /// The options when using ClientCredentials, otherwise ignored.
         /// </summary>
         public ClientCredentailsAccessTokenFactoryOptions ClientCredentials { get; set; } = new ClientCredentailsAccessTokenFactoryOptions();
+
+        /// <summary>
+        /// If ClientCredentials is null and this is set to a function the client credentials setup by the callback will be used.
+        /// </summary>
+        [JsonIgnore]
+        public Action<SharedClientCredentials> GetSharedClientCredentials { get; set; }
     }
 }
