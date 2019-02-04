@@ -66,20 +66,19 @@ namespace PiperHome
         {
             if (unlocked)
             {
-                try
+                Task t = Task.Run(async () =>
                 {
-                    Task t = Task.Run(async () =>
+                    try
                     {
                         var executeTask = command.Execute();
                         speak(command.Data.Response);
                         await executeTask;
-                    });
-                    t.Wait();
-                }
-                catch(Exception)
-                {
-                    speak($"error running {command.Data.VoicePrompt}");
-                }
+                    }
+                    catch (Exception)
+                    {
+                        speak($"error running {command.Data.VoicePrompt}");
+                    }
+                });
             }
             else
             {
@@ -109,12 +108,12 @@ namespace PiperHome
             try
             {
                 int deviceNumber = 0;
-                if(PlaybackDeviceName != null)
+                if (PlaybackDeviceName != null)
                 {
                     int waveOutDevices = WaveOut.DeviceCount;
                     for (int device = 0; device < waveOutDevices; device++)
                     {
-                        if(WaveOut.GetCapabilities(device).ProductName == PlaybackDeviceName)
+                        if (WaveOut.GetCapabilities(device).ProductName == PlaybackDeviceName)
                         {
                             deviceNumber = device;
                             break;
