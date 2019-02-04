@@ -45,24 +45,27 @@ namespace VoiceRecognition
 
         private void ContextMenuStrip_VisibleChanged(object sender, EventArgs e)
         {
-            if(contextMenuStrip.Visible)
+            if (contextMenuStrip.Visible)
             {
-                while(chooseAudioDevice.HasDropDownItems)
+                while (chooseAudioDevice.HasDropDownItems)
                 {
                     (chooseAudioDevice.DropDownItems[0] as ToolStripMenuItem).Dispose();
                 }
                 chooseAudioDevice.DropDownItems.Clear();
 
-                foreach(var device in commands.PlaybackDeviceNames)
+                if (commands != null)
                 {
-                    var menuItem = new ToolStripMenuItem(device);
-                    menuItem.Click += (s, ea) =>
+                    foreach (var device in commands.PlaybackDeviceNames)
                     {
-                        PlaybackDeviceName = device;
-                        commands.PlaybackDeviceName = device;
-                        ConfigurationChanged?.Invoke();
-                    };
-                    chooseAudioDevice.DropDownItems.Add(menuItem);
+                        var menuItem = new ToolStripMenuItem(device);
+                        menuItem.Click += (s, ea) =>
+                        {
+                            Config.PlaybackDeviceName = device;
+                            commands.PlaybackDeviceName = device;
+                            ConfigurationChanged?.Invoke();
+                        };
+                        chooseAudioDevice.DropDownItems.Add(menuItem);
+                    }
                 }
             }
         }
@@ -74,53 +77,47 @@ namespace VoiceRecognition
         /// </summary>
         public async Task fetchConfigurationAsync()
         {
-            //Setup client
-            var options = new ButlerClientOptions()
-            {
-                ServiceUrl = "https://localhost:44362/api",
-                ClientCredentials = new ClientCredentailsAccessTokenFactoryOptions()
-                {
-                    ClientId = "Butler.Test.Kinect",
-                    ClientSecret = "notyetdefined",
-                    IdServerHost = "https://localhost:44390",
-                    Scope = "Butler"
-                }
-            };
-
-            var factory = new ClientCredentialsAccessTokenFactory<EntryPointInjector>(options.ClientCredentials, new BearerHttpClientFactory<EntryPointInjector>(new DefaultHttpClientFactory()));
-            var injector = new EntryPointInjector(options.ServiceUrl, factory);
-            var entry = await injector.Load();
-            var commandResult = await entry.ListAppCommandSets(new AppCommandSetQuery()
-            {
-                Limit = int.MaxValue
-            });
             //Try to download
-            //while (voiceConfig == null)
-            //{
-            //    try
-            //    {
-            //        voiceConfig = await client.getVoiceConfigAsync();
-            //        foundConfig = true;
-            //    }
-            //    catch (Exception)
-            //    {
-            //        Thread.Sleep(10000);
-            //    }
-            //}
+            AppCommandSetCollectionResult commandResult = null;
+            bool retry = true;
+            while (retry)
+            {
+                try
+                {
+                    commandResult = await LoadCommands();
+                    retry = false;
+                }
+                catch (Exception)
+                {
+                    Thread.Sleep(10000);
+                }
+            }
 
             this.Invoke(new Action(() =>
             {
                 //Setup commands
                 commands = new VoiceCommands(commandResult);
                 commands.Restart += commands_Restart;
-                commands.PlaybackDeviceName = PlaybackDeviceName;
+                commands.PlaybackDeviceName = Config.PlaybackDeviceName;
 
                 //Setup kinect
-                recognizer = new KinectVoiceRecognizer(Hotword, commands.getCommands(), Sensitivity);
+                recognizer = new KinectVoiceRecognizer(Config.Hotword, commands.getCommands(), Config.Sensitivity);
                 recognizer.SensorConnected += recognizer_SensorConnected;
                 recognizer.SensorDisconnected += recognizer_SensorDisconnected;
                 recognizer.initialize();
             }));
+        }
+
+        private async Task<AppCommandSetCollectionResult> LoadCommands()
+        {
+            var factory = new ClientCredentialsAccessTokenFactory<EntryPointInjector>(Config.ButlerClient.ClientCredentials, new BearerHttpClientFactory<EntryPointInjector>(new DefaultHttpClientFactory()));
+            var injector = new EntryPointInjector(Config.ButlerClient.ServiceUrl, factory);
+            var entry = await injector.Load();
+            var commandResult = await entry.ListAppCommandSets(new AppCommandSetQuery()
+            {
+                Limit = int.MaxValue
+            });
+            return commandResult;
         }
 
         protected override void OnShown(EventArgs e)
@@ -134,16 +131,7 @@ namespace VoiceRecognition
             commands?.Dispose();
         }
 
-        public String Host { get; set; }
-
-        public String Hotword { get; set; }
-
-        public double Sensitivity { get; set; }
-
-        /// <summary>
-        /// The playback device to use. null Uses the system default.
-        /// </summary>
-        public String PlaybackDeviceName { get; set; }
+        public Config Config { get; set; }
 
         public ProcessStartInfo RestartInfo { get; private set; }
 
@@ -210,7 +198,7 @@ namespace VoiceRecognition
             {
                 if (connected)
                 {
-                    this.showMessage(String.Format("Sensor connected, ready to listen.\nHotword: {0}\nSensitivity: {1}\nSensor: {2}", Hotword, Sensitivity, recognizer.SensorType));
+                    this.showMessage(String.Format("Sensor connected, ready to listen.\nHotword: {0}\nSensitivity: {1}\nSensor: {2}", Config.Hotword, Config.Sensitivity, recognizer.SensorType));
                 }
                 else
                 {
@@ -219,7 +207,7 @@ namespace VoiceRecognition
             }
             else
             {
-                showMessage($"Connecting to {Host}.");
+                showMessage($"Connecting to {Config.ButlerClient.ServiceUrl}.");
             }
         }
 

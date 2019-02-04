@@ -184,6 +184,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VoiceCommands.cs" />
@@ -199,10 +200,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Anomalous\Engine\Engine\Engine.csproj">
-      <Project>{57c253f1-157f-4a6a-9fed-345a776b97d5}</Project>
-      <Name>Engine</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Butler.Client\Butler.Client.csproj">
       <Project>{1abbfbf3-d34b-4831-9170-3ce0507a13b7}</Project>
       <Name>Butler.Client</Name>
@@ -210,10 +207,6 @@
     <ProjectReference Include="..\KinectDriver\KinectDriver.csproj">
       <Project>{90378a5a-a38c-4f54-8faf-3cf3a73a6279}</Project>
       <Name>KinectDriver</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PiperHomeClientCore\PiperHomeClientCore.csproj">
-      <Project>{9ec43f40-40d7-4e0f-84f3-868421c67c37}</Project>
-      <Name>PiperHomeClientCore</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

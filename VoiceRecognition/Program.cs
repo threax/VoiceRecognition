@@ -1,4 +1,4 @@
-﻿using Engine;
+﻿using Newtonsoft.Json;
 using PiperHome;
 using System;
 using System.Collections.Generic;
@@ -23,55 +23,43 @@ namespace VoiceRecognition
             using (VoiceForm form = new VoiceForm())
             {
                 String configFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-                configFolder = Path.Combine(configFolder, "PiperHomeVoiceRecognition");
+                configFolder = Path.Combine(configFolder, "Threax.Butler/Voice");
                 if (!Directory.Exists(configFolder))
                 {
                     Directory.CreateDirectory(configFolder);
                 }
 
-                String configFile = Path.Combine(configFolder, "VoiceConfig.ini");
-                ConfigFile config = new ConfigFile(configFile);
+                String configFile = Path.GetFullPath(Path.Combine(configFolder, "VoiceConfig.json"));
 
                 if (File.Exists(configFile))
                 {
-                    config.loadConfigFile();
+                    form.Config = LoadConfig(configFile);
                 }
 
-                var section = config.createOrRetrieveConfigSection("Program");
+                if (form.Config?.ButlerClient?.ServiceUrl == null)
+                {
+                    var result = MessageBox.Show($"You must provide a service url in {configFile}. Click yes to create the file and open the folder.\nNo to just open the folder.\nCancel to do nothing and close.", "Configuration Required", MessageBoxButtons.YesNoCancel);
+                    if (result == DialogResult.Yes)
+                    {
+                        SaveConfig(File.Exists(configFile) ? LoadConfig(configFile) : new Config(), configFile);
+                        Process.Start("explorer.exe", Path.GetDirectoryName(configFile));
+                    }
+                    else if(result == DialogResult.No)
+                    {
+                        Process.Start("explorer.exe", Path.GetDirectoryName(configFile));
+                    }
+                    return;
+                }
 
                 form.ConfigurationChanged += () =>
                 {
-                    section.setValue("Host", form.Host);
-                    section.setValue("Hotword", form.Hotword);
-                    section.setValue("Sensitivity", form.Sensitivity);
-                    section.setValue("PlaybackDeviceName", form.PlaybackDeviceName);
-                    config.writeConfigFile();
+                    SaveConfig(form.Config, configFile);
                 };
-                form.Host = section.getValue("Host", "http://home.threax.com");
-                form.Hotword = section.getValue("Hotword", "collins");
-                form.Sensitivity = section.getValue("Sensitivity", 0.55);
-                form.PlaybackDeviceName = section.getValue("PlaybackDeviceName", (String)null);
-                int restartMinutes = section.getValue("RestartTime", 30);
 
                 Task.Run(() => form.fetchConfigurationAsync());
 
-                if (!File.Exists(configFile))
-                {
-                    config.writeConfigFile();
-                }
-
                 try
                 {
-                    //Timer t = new Timer();
-                    //t.Interval = (int)TimeSpan.FromMinutes(restartMinutes).TotalMilliseconds;
-                    //t.Tick += (s, e) =>
-                    //{
-                    //    t.Stop();
-                    //    form.buildRestart();
-                    //    Application.Exit();
-                    //};
-                    //t.Start();
-
                     Application.Run(form);
                 }
                 catch (Exception)
@@ -83,6 +71,22 @@ namespace VoiceRecognition
                 {
                     Process.Start(form.RestartInfo);
                 }
+            }
+        }
+
+        private static Config LoadConfig(string configFile)
+        {
+            using (var reader = new StreamReader(File.Open(configFile, FileMode.Open, FileAccess.Read, FileShare.Read)))
+            {
+                return JsonConvert.DeserializeObject<Config>(reader.ReadToEnd());
+            }
+        }
+
+        private static void SaveConfig(Config config, string configFile)
+        {
+            using (var writer = new StreamWriter(File.Open(configFile, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None)))
+            {
+                writer.Write(JsonConvert.SerializeObject(config, Formatting.Indented));
             }
         }
     }
