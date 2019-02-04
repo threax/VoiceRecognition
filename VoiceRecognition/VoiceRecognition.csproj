@@ -35,6 +35,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>sound.ico</ApplicationIcon>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />

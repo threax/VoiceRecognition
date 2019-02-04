@@ -86,6 +86,7 @@ namespace VoiceRecognition
                 {
                     commandResult = await LoadCommands();
                     retry = false;
+                    foundConfig = true;
                 }
                 catch (Exception)
                 {
