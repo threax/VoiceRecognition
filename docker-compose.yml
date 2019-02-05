@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  app:
+    image: threax/butler
+    build:
+      context: .
+      dockerfile: Butler/Dockerfile
+    networks:
+      - appnet
+    volumes:
+      - type: bind
+        source: ../TrustedRoots
+        target: /usr/local/share/ca-certificates
+      - type: bind
+        source: ../DevData/butler
+        target: /appdata
+    labels:
+      - "threax.nginx.host=butler.dev.threax.com"
+
+networks:
+  appnet:
+    external: true
