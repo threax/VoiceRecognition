@@ -84,7 +84,7 @@ namespace VoiceRecognition
 
         private static void SaveConfig(Config config, string configFile)
         {
-            using (var writer = new StreamWriter(File.Open(configFile, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None)))
+            using (var writer = new StreamWriter(File.Open(configFile, FileMode.Create, FileAccess.Write, FileShare.None)))
             {
                 writer.Write(JsonConvert.SerializeObject(config, Formatting.Indented));
             }
