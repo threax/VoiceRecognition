@@ -5,11 +5,11 @@ FROM threax/build AS build
 WORKDIR /src
 COPY . .
 WORKDIR /src/Butler
-RUN yarn run yarn-install
+RUN npm install
 RUN dotnet restore Butler.csproj
 RUN dotnet build Butler.csproj -c Release -o /app
-RUN yarn run clean
-RUN yarn run build
+RUN npm run clean
+RUN npm run build
 
 FROM build AS publish
 RUN dotnet publish Butler.csproj -c Release -o /app
