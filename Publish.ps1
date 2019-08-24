@@ -21,7 +21,7 @@ function Test-Error([string] $msg, [int] $code = 0){
 }
 
 $scriptPath = Split-Path $script:MyInvocation.MyCommand.Path
-$publishDir = "$scriptPath\Publish"
+$publishDir = "$scriptPath\VoiceRecognition\bin\Release"
 try{
     Push-Location $scriptPath
 
@@ -30,11 +30,18 @@ try{
     }
 
     try{
-        Push-Location $appFolder -ErrorAction Stop
-        MSBuild.exe /p:Configuration=Release "$csproj"
+        Push-Location $scriptPath\Butler -ErrorAction Stop
+        npm install
     }
     finally{
         Pop-Location
+    }
+
+    try{
+        nuget restore "Threax.Butler.sln"
+        MSBuild.exe /p:Configuration=Release "Threax.Butler.sln"
+    }
+    finally{
     }
     
     if(Test-Path $artifactName){
