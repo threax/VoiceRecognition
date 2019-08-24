@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using PiperHome;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Threax.Extensions.Configuration.SchemaBinder;
 
 namespace VoiceRecognition
 {
@@ -17,60 +19,43 @@ namespace VoiceRecognition
         [STAThread]
         static void Main(string[] args)
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-
-            using (VoiceForm form = new VoiceForm())
+            try
             {
-                String configFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-                configFolder = Path.Combine(configFolder, "Threax.Butler/Voice");
-                if (!Directory.Exists(configFolder))
-                {
-                    Directory.CreateDirectory(configFolder);
-                }
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                var appDir = Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]);
 
-                String configFile = Path.GetFullPath(Path.Combine(configFolder, "VoiceConfig.json"));
-
-                if (File.Exists(configFile))
+                using (VoiceForm form = new VoiceForm())
                 {
-                    form.Config = LoadConfig(configFile);
-                }
+                    var configBuilder = new ConfigurationBuilder();
+                    configBuilder.AddJsonFile(Path.Combine(appDir, "appsettings.json"));
+                    configBuilder.AddJsonFile(Path.Combine(appDir, "appsettings.Production.json"), optional: true);
+                    configBuilder.AddJsonFile(Path.Combine(appDir, "appsettings.secrets.json"), optional: true);
+                    var config = configBuilder.Build();
+                    var appConfig = new Config();
+                    config.Bind(appConfig);
+                    form.Config = appConfig;
 
-                if (form.Config?.ButlerClient?.ServiceUrl == null)
-                {
-                    var result = MessageBox.Show($"You must provide a service url in {configFile}. Click yes to create the file and open the folder.\nNo to just open the folder.\nCancel to do nothing and close.", "Configuration Required", MessageBoxButtons.YesNoCancel);
-                    if (result == DialogResult.Yes)
+                    Task.Run(() => form.fetchConfigurationAsync());
+
+                    try
                     {
-                        SaveConfig(File.Exists(configFile) ? LoadConfig(configFile) : new Config(), configFile);
-                        Process.Start("explorer.exe", Path.GetDirectoryName(configFile));
+                        Application.Run(form);
                     }
-                    else if(result == DialogResult.No)
+                    catch (Exception)
                     {
-                        Process.Start("explorer.exe", Path.GetDirectoryName(configFile));
+                        form.buildRestart();
                     }
-                    return;
-                }
 
-                form.ConfigurationChanged += () =>
-                {
-                    SaveConfig(form.Config, configFile);
-                };
-
-                Task.Run(() => form.fetchConfigurationAsync());
-
-                try
-                {
-                    Application.Run(form);
+                    if (form.RestartInfo != null)
+                    {
+                        Process.Start(form.RestartInfo);
+                    }
                 }
-                catch (Exception)
-                {
-                    form.buildRestart();
-                }
-
-                if (form.RestartInfo != null)
-                {
-                    Process.Start(form.RestartInfo);
-                }
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show(e.Message, e.GetType().Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

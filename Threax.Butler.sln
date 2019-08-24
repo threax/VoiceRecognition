@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.329
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29201.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Butler", "Butler\Butler.csproj", "{3F55B700-1B04-48BC-97D9-250DD8113A24}"
 EndProject
@@ -16,6 +16,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KinectDriver", "KinectDriver\KinectDriver.csproj", "{90378A5A-A38C-4F54-8FAF-3CF3A73A6279}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoiceRecognition", "VoiceRecognition\VoiceRecognition.csproj", "{A712CECD-675D-4F13-AEE9-28214E0F32EB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EC20CEBE-F4BC-4AAD-BE77-D0A7B07B9D24} = {EC20CEBE-F4BC-4AAD-BE77-D0A7B07B9D24}
+		{81E72FD8-EAB7-4C69-8E82-22971B973DCB} = {81E72FD8-EAB7-4C69-8E82-22971B973DCB}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
