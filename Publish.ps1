@@ -33,16 +33,8 @@ try{
     }
 
     try{
-        Push-Location $scriptPath\Butler -ErrorAction Stop
-        npm install
-    }
-    finally{
-        Pop-Location
-    }
-
-    try{
-        nuget restore "Threax.Butler.sln"
-        MSBuild.exe /p:Configuration=Release "Threax.Butler.sln"
+        nuget restore "Threax.VoiceRecognition.sln"
+        MSBuild.exe /p:Configuration=Release "Threax.VoiceRecognition.sln"
     }
     finally{
     }
