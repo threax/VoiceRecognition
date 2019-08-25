@@ -195,6 +195,12 @@ namespace Butler
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            var log = loggerFactory.CreateLogger<Startup>();
+            log.LogInformation($"JwtAuth: {(Configuration["JwtAuth:Authority"])}");
+            log.LogInformation($"IdServerClient: {(Configuration["IdServerClient:ServiceUrl"])}");
+            log.LogInformation($"CommandClient: {(Configuration["IdServerClient:ServiceUrl"])}");
+            log.LogInformation($"SharedClientCredentials: {(Configuration["SharedClientCredentials:IdServerHost"])}");
+
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedProto
