@@ -222,10 +222,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Butler.Client\Butler.Client.csproj">
-      <Project>{1abbfbf3-d34b-4831-9170-3ce0507a13b7}</Project>
-      <Name>Butler.Client</Name>
-    </ProjectReference>
     <ProjectReference Include="..\KinectDriver\KinectDriver.csproj">
       <Project>{90378a5a-a38c-4f54-8faf-3cf3a73a6279}</Project>
       <Name>KinectDriver</Name>

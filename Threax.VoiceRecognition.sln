@@ -3,10 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29201.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Butler", "Butler\Butler.csproj", "{3F55B700-1B04-48BC-97D9-250DD8113A24}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Butler.Client", "Butler.Client\Butler.Client.csproj", "{1ABBFBF3-D34B-4831-9170-3CE0507A13B7}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KinectCore", "KinectCore\KinectCore.csproj", "{0BE25C29-D364-460F-9F39-AC24DC3C2620}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kinect1Lib", "Kinect1Lib\Kinect1Lib.csproj", "{EC20CEBE-F4BC-4AAD-BE77-D0A7B07B9D24}"
@@ -27,14 +23,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3F55B700-1B04-48BC-97D9-250DD8113A24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3F55B700-1B04-48BC-97D9-250DD8113A24}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3F55B700-1B04-48BC-97D9-250DD8113A24}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3F55B700-1B04-48BC-97D9-250DD8113A24}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1ABBFBF3-D34B-4831-9170-3CE0507A13B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1ABBFBF3-D34B-4831-9170-3CE0507A13B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1ABBFBF3-D34B-4831-9170-3CE0507A13B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1ABBFBF3-D34B-4831-9170-3CE0507A13B7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0BE25C29-D364-460F-9F39-AC24DC3C2620}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0BE25C29-D364-460F-9F39-AC24DC3C2620}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0BE25C29-D364-460F-9F39-AC24DC3C2620}.Release|Any CPU.ActiveCfg = Release|Any CPU
