@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Threax.AspNetCore.Halcyon.Client;
+using Threax.AspNetCore.Halcyon.Client.OpenIdConnect;
 
 namespace VoiceRecognition
 {
@@ -28,7 +29,7 @@ namespace VoiceRecognition
         /// <summary>
         /// Butler client options.
         /// </summary>
-        public ButlerClientOptions ButlerClient { get; set; } = new ButlerClientOptions()
+        public ButlerClientOptionsVoiceRecognition ButlerClient { get; set; } = new ButlerClientOptionsVoiceRecognition()
         {
             ServiceUrl = null,
             ClientCredentials = new ClientCredentailsAccessTokenFactoryOptions()

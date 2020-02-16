@@ -13,6 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Threax.AspNetCore.Halcyon.Client;
+using Threax.AspNetCore.Halcyon.Client.OpenIdConnect;
 
 namespace VoiceRecognition
 {

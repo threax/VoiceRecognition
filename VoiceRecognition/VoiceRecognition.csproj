@@ -41,8 +41,8 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="IdentityModel, Version=3.10.4.0, Culture=neutral, PublicKeyToken=e7877f4675df049f, processorArchitecture=MSIL">
-      <HintPath>..\packages\IdentityModel.3.10.4\lib\net452\IdentityModel.dll</HintPath>
+    <Reference Include="IdentityModel, Version=4.1.1.0, Culture=neutral, PublicKeyToken=e7877f4675df049f, processorArchitecture=MSIL">
+      <HintPath>..\packages\IdentityModel.4.1.1\lib\net461\IdentityModel.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNetCore.Authentication, Version=2.0.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNetCore.Authentication.2.0.1\lib\netstandard2.0\Microsoft.AspNetCore.Authentication.dll</HintPath>
@@ -151,7 +151,6 @@
     </Reference>
     <Reference Include="NAudio, Version=1.7.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NAudio.1.7.3\lib\net35\NAudio.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -168,10 +167,17 @@
     <Reference Include="System.IdentityModel.Tokens.Jwt, Version=5.1.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.5.1.4\lib\net451\System.IdentityModel.Tokens.Jwt.dll</HintPath>
     </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.3\lib\netstandard2.0\System.Memory.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.4.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -190,8 +196,8 @@
       <HintPath>..\packages\System.Security.Principal.Windows.4.4.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
     </Reference>
     <Reference Include="System.Speech" />
-    <Reference Include="System.Text.Encodings.Web, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Encodings.Web.4.5.0\lib\netstandard2.0\System.Text.Encodings.Web.dll</HintPath>
+    <Reference Include="System.Text.Encodings.Web, Version=4.0.4.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.4.6.0\lib\netstandard2.0\System.Text.Encodings.Web.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
@@ -203,20 +209,24 @@
     <Reference Include="Threax.AspNetCore.AuthCore, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Threax.AspNetCore.AuthCore.2.0.3\lib\netstandard2.0\Threax.AspNetCore.AuthCore.dll</HintPath>
     </Reference>
-    <Reference Include="Threax.AspNetCore.Halcyon.Client, Version=7.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Threax.AspNetCore.Halcyon.Client.7.1.1\lib\netstandard2.0\Threax.AspNetCore.Halcyon.Client.dll</HintPath>
+    <Reference Include="Threax.AspNetCore.Halcyon.Client, Version=9.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Threax.AspNetCore.Halcyon.Client.9.0.0\lib\netstandard2.0\Threax.AspNetCore.Halcyon.Client.dll</HintPath>
     </Reference>
-    <Reference Include="Threax.Butler.Client, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Threax.Butler.Client.1.0.1\lib\netstandard2.0\Threax.Butler.Client.dll</HintPath>
+    <Reference Include="Threax.AspNetCore.Halcyon.Client.OpenIdConnect, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Threax.AspNetCore.Halcyon.Client.OpenIdConnect.1.0.0\lib\netstandard2.0\Threax.AspNetCore.Halcyon.Client.OpenIdConnect.dll</HintPath>
     </Reference>
-    <Reference Include="Threax.Extensions.Configuration.SchemaBinder, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Threax.Extensions.Configuration.SchemaBinder.1.3.0\lib\netstandard2.0\Threax.Extensions.Configuration.SchemaBinder.dll</HintPath>
+    <Reference Include="Threax.Butler.Client, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Threax.Butler.Client.2.0.0-pre01\lib\netstandard2.0\Threax.Butler.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Threax.Extensions.Configuration.SchemaBinder, Version=1.5.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Threax.Extensions.Configuration.SchemaBinder.1.5.1\lib\netstandard2.0\Threax.Extensions.Configuration.SchemaBinder.dll</HintPath>
     </Reference>
     <Reference Include="Threax.SharedHttpClient, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Threax.SharedHttpClient.1.0.0\lib\netstandard2.0\Threax.SharedHttpClient.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ButlerClientOptionsVoiceRecognition.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -230,6 +240,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
