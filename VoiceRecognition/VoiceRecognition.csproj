@@ -216,7 +216,7 @@
       <HintPath>..\packages\Threax.AspNetCore.Halcyon.Client.OpenIdConnect.1.0.0\lib\netstandard2.0\Threax.AspNetCore.Halcyon.Client.OpenIdConnect.dll</HintPath>
     </Reference>
     <Reference Include="Threax.Butler.Client, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Threax.Butler.Client.2.0.0-pre01\lib\netstandard2.0\Threax.Butler.Client.dll</HintPath>
+      <HintPath>..\packages\Threax.Butler.Client.2.0.0\lib\netstandard2.0\Threax.Butler.Client.dll</HintPath>
     </Reference>
     <Reference Include="Threax.Extensions.Configuration.SchemaBinder, Version=1.5.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Threax.Extensions.Configuration.SchemaBinder.1.5.1\lib\netstandard2.0\Threax.Extensions.Configuration.SchemaBinder.dll</HintPath>
